@@ -28,14 +28,28 @@ _decompose-process-up_help() {
 }
 
 _decompose-process-shout() {
-  docker-compose run --entrypoint="shout" --rm shout --home /shout $@
+  local cid=$(docker-compose ps -q shout)
+  local status=$(docker inspect -f {{.State.Status}} $cid)
+
+  if [ "$status" = "running" ]; then
+    docker exec -it $cid shout --home /shout $@
+  else
+    docker-compose run --entrypoint="shout" --rm shout --home /shout $@
+  fi
 }
 _decompose-process-shout_help() {
   echo "  Run shout command with parameters."
 }
 
 _decompose-process-bash() {
-  docker-compose run --entrypoint="bash"  --rm shout
+  local cid=$(docker-compose ps -q shout)
+  local status=$(docker inspect -f {{.State.Status}} $cid)
+
+  if [ "$status" = "running" ]; then
+    docker exec -it $cid bash
+  else
+    docker-compose run --entrypoint="bash"  --rm shout
+  fi
 }
 _decompose-process-shout_help() {
   echo "  Run bash in a copy of the shout container."
