@@ -1,0 +1,7 @@
+# Include common elements
+source $(_decompose-project-root)/.decompose/environment/lib/web/elements
+source $(_decompose-project-root)/elements
+
+ELEMENTS_POST_PROCESS+=( "${ELEMENTS_WEB_POST_PROCESS[@]}" )
+
+# vim:syntax=sh
