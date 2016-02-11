@@ -10,7 +10,7 @@ Shout environment for decompose intended to help quickly start a Shout server an
 
 ``` bash
 # Initialize
-decompose --init https://github.com/dmp1ce/decompose-murmur.git
+decompose --init https://github.com/dmp1ce/decompose-shout.git
 
 # build and start
 decompose build && decompose up
