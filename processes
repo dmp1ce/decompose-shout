@@ -16,7 +16,7 @@ _decompose-process-build() {
   _decompose-process-docker-build
 
   # Make volume writable
-  docker-compose run -u root lounge chown lounge: /home/lounge
+  docker-compose run --rm -u root lounge chown lounge: /home/lounge
 }
 _decompose-process-build_help() {
   echo "  Build shout server"
