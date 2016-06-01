@@ -5,4 +5,6 @@ source $(_decompose-project-root)/elements
 
 ELEMENTS_POST_PROCESS+=( "${ELEMENTS_WEB_POST_PROCESS[@]}" )
 
+source $(_decompose-project-root)/.decompose/elements
+
 # vim:syntax=sh
