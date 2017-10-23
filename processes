@@ -5,7 +5,7 @@ source $(_decompose-project-root)/.decompose/environment/lib/docker/processes
 source $(_decompose-project-root)/processes
 
 # Declare processes
-DECOMPOSE_PROCESSES+=( 'build' 'up' 'shout' 'bash'
+DECOMPOSE_PROCESSES+=( 'build' 'up' 'lounge' 'bash'
   "${DECOMPOSE_WEB_PROCESSES[@]}" "${DECOMPOSE_COMMON_PROCESSES[@]}"
   "${DECOMPOSE_DOCKER_PROCESSES[@]}" )
 
@@ -16,10 +16,10 @@ _decompose-process-build() {
   _decompose-process-docker-build
 
   # Make volume writable
-  docker-compose run --rm -u root lounge chown lounge: /home/lounge
+  docker-compose run --rm -u root lounge chown lounge:lounge /home/lounge
 }
 _decompose-process-build_help() {
-  echo "  Build shout server"
+  echo "  Build lounge server"
 }
 
 _decompose-process-up() {
@@ -27,35 +27,35 @@ _decompose-process-up() {
   _decompose-process_nginx_proxy_up
 }
 _decompose-process-up_help() {
-  echo "  Bring shout server up"
+  echo "  Bring lounge server up"
 }
 
-_decompose-process-shout() {
-  local cid=$(docker-compose ps -q shout)
+_decompose-process-lounge() {
+  local cid=$(docker-compose ps -q lounge)
   local status=$(docker inspect -f {{.State.Status}} $cid)
 
   if [ "$status" = "running" ]; then
-    docker exec -it $cid shout --home /shout $@
+    docker exec -it $cid lounge $@
   else
-    docker-compose run --entrypoint="shout" --rm shout --home /shout $@
+    docker-compose run --entrypoint="lounge" --rm lounge $@
   fi
 }
-_decompose-process-shout_help() {
-  echo "  Run shout command with parameters."
+_decompose-process-lounge_help() {
+  echo "  Run lounge command with parameters."
 }
 
 _decompose-process-bash() {
-  local cid=$(docker-compose ps -q shout)
+  local cid=$(docker-compose ps -q lounge)
   local status=$(docker inspect -f {{.State.Status}} $cid)
 
   if [ "$status" = "running" ]; then
     docker exec -it $cid bash
   else
-    docker-compose run --entrypoint="bash"  --rm shout
+    docker-compose run --entrypoint="bash"  --rm lounge
   fi
 }
-_decompose-process-shout_help() {
-  echo "  Run bash in a copy of the shout container."
+_decompose-process-bash_help() {
+  echo "  Run bash in a copy of the lounge container."
 }
 
 # vim:syntax=sh
