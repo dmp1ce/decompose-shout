@@ -32,9 +32,9 @@ _decompose-process-lounge() {
   local status=$(docker inspect -f {{.State.Status}} $cid)
 
   if [ "$status" = "running" ]; then
-    docker exec -it $cid lounge $@
+    docker exec -it $cid thelounge $@
   else
-    docker-compose run --entrypoint="lounge" --rm lounge $@
+    docker-compose run --entrypoint="lounge" --rm thelounge $@
   fi
 }
 _decompose-process-lounge_help() {
